@@ -1,0 +1,59 @@
+name: Update Sitemap
+
+on:
+  schedule:
+    - cron: '0 0 * * *'   # 00:00 UTC (meia-noite)
+    - cron: '0 6 * * *'   # 06:00 UTC
+    - cron: '0 12 * * *'  # 12:00 UTC (meio-dia)
+    - cron: '0 18 * * *'  # 18:00 UTC
+    - cron: '0 23 * * *'  # 23:00 UTC
+  workflow_dispatch:      # Permite execução manual
+
+jobs:
+  update-sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Necessário para histórico completo do Git
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Update sitemap with current date and time
+        run: |
+          CURRENT_DATETIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          cat <<EOF > sitemap.xml
+          <?xml version="1.0" encoding="UTF-8"?>
+          <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+            <url>
+              <loc>https://app.acertosonline.com/</loc>
+              <lastmod>$CURRENT_DATETIME</lastmod>
+              <changefreq>hourly</changefreq>
+              <priority>1.0</priority>
+            </url>
+            <url>
+              <loc>https://app.acertosonline.com/palpites</loc>
+              <lastmod>$CURRENT_DATETIME</lastmod>
+              <changefreq>hourly</changefreq>
+              <priority>0.8</priority>
+            </url>
+          </urlset>
+          EOF
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add sitemap.xml
+          git commit -m "Update sitemap lastmod to $CURRENT_DATETIME"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Ping Google
+        run: |
+          curl "http://www.google.com/ping?sitemap=https://app.acertosonline.com/sitemap.xml"
