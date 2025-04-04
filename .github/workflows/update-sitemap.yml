@@ -30,13 +30,13 @@ jobs:
           <?xml version="1.0" encoding="UTF-8"?>
           <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
             <url>
-              <loc>https://app.acertosonline.com/</loc>
+              <loc>https://app.aguia-oficial.com/</loc>
               <lastmod>$CURRENT_DATETIME</lastmod>
               <changefreq>hourly</changefreq>
               <priority>1.0</priority>
             </url>
             <url>
-              <loc>https://app.acertosonline.com/palpites</loc>
+              <loc>https://app.aguia-oficial.com/palpites</loc>
               <lastmod>$CURRENT_DATETIME</lastmod>
               <changefreq>hourly</changefreq>
               <priority>0.8</priority>
@@ -56,4 +56,4 @@ jobs:
 
       - name: Ping Google
         run: |
-          curl "http://www.google.com/ping?sitemap=https://app.acertosonline.com/sitemap.xml"
+          curl "http://www.google.com/ping?sitemap=https://app.aguia-oficial.com/sitemap.xml"
