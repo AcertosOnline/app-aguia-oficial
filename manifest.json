@@ -1,10 +1,10 @@
 {
-    "name": "Acertos Club",
-    "short_name": "Acertos.club",
+    "name": "Águia Oficial",
+    "short_name": "Águia Oficial",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#f3670f",
-    "theme_color": "#f3670f",
+    "background_color": "#00db13",
+    "theme_color": "#00db13",
     "icons": [
         {
             "src": "/icons/icon-192x192.webp",
